@@ -145,8 +145,144 @@ img {
   transform: translateY(0);
 }
 
+.parallax-dots {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.parallax-dot {
+  --parallax-x: 0px;
+  --parallax-y: 0px;
+  position: absolute;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(168, 255, 203, 0.92) 0, rgba(125, 226, 167, 0.6) 34%, rgba(125, 226, 167, 0.18) 58%, transparent 76%);
+  box-shadow:
+    0 0 18px rgba(125, 226, 167, 0.18),
+    0 0 42px rgba(125, 226, 167, 0.12);
+  opacity: 0.34;
+  filter: blur(0.4px);
+  transform: translate3d(var(--parallax-x), var(--parallax-y), 0);
+  transition:
+    transform 320ms ease-out,
+    opacity var(--transition-base);
+  will-change: transform;
+}
+
+html[data-theme="light"] .parallax-dot {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(32, 114, 68, 0.54) 0, rgba(32, 114, 68, 0.32) 34%, rgba(32, 114, 68, 0.1) 58%, transparent 76%);
+  box-shadow:
+    0 0 18px rgba(32, 114, 68, 0.08),
+    0 0 38px rgba(32, 114, 68, 0.08);
+  opacity: 0.32;
+}
+
+.parallax-dot--1 {
+  top: 11%;
+  left: 7%;
+  width: 18px;
+  height: 18px;
+}
+
+.parallax-dot--2 {
+  top: 20%;
+  right: 16%;
+  width: 12px;
+  height: 12px;
+}
+
+.parallax-dot--3 {
+  top: 37%;
+  left: 14%;
+  width: 22px;
+  height: 22px;
+}
+
+.parallax-dot--4 {
+  top: 54%;
+  right: 11%;
+  width: 14px;
+  height: 14px;
+}
+
+.parallax-dot--5 {
+  bottom: 18%;
+  left: 10%;
+  width: 16px;
+  height: 16px;
+}
+
+.parallax-dot--6 {
+  bottom: 12%;
+  right: 22%;
+  width: 10px;
+  height: 10px;
+}
+
 .page-shell {
+  position: relative;
+  z-index: 1;
   padding: 24px;
+}
+
+.ambient-glows {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125, 226, 167, 0.18) 0, rgba(125, 226, 167, 0.08) 38%, transparent 72%);
+  filter: blur(18px);
+  opacity: 0.72;
+}
+
+html[data-theme="light"] .ambient-glow {
+  background: radial-gradient(circle, rgba(32, 114, 68, 0.14) 0, rgba(32, 114, 68, 0.06) 38%, transparent 72%);
+  opacity: 0.64;
+}
+
+.ambient-glow--1 {
+  top: 5%;
+  left: -48px;
+  width: 168px;
+  height: 168px;
+}
+
+.ambient-glow--2 {
+  top: 34%;
+  left: -36px;
+  width: 112px;
+  height: 112px;
+}
+
+.ambient-glow--3 {
+  top: 12%;
+  right: -42px;
+  width: 154px;
+  height: 154px;
+}
+
+.ambient-glow--4 {
+  top: 47%;
+  right: -28px;
+  width: 98px;
+  height: 98px;
+}
+
+.ambient-glow--5 {
+  bottom: 9%;
+  right: -54px;
+  width: 188px;
+  height: 188px;
 }
 
 .container {
@@ -913,6 +1049,14 @@ html[data-theme="light"] .media-modal__dialog {
 }
 
 @media (max-width: 720px) {
+  .parallax-dot {
+    opacity: 0.24;
+  }
+
+  .ambient-glow {
+    opacity: 0.48;
+  }
+
   .page-shell {
     padding: 16px;
   }

@@ -690,6 +690,7 @@ const selectors = {
   educationList: document.querySelector("#education-list"),
   experienceList: document.querySelector("#experience-list"),
   heroName: document.querySelector('[data-i18n="hero.name"]'),
+  parallaxDots: Array.from(document.querySelectorAll("[data-parallax-dot]")),
   siteHeader: document.querySelector(".site-header"),
   siteNav: document.querySelector(".site-nav"),
   siteNavLinks: Array.from(document.querySelectorAll(".site-nav a")),
@@ -716,9 +717,14 @@ let isHeaderMenuOpen = false;
 let isLanguageMenuOpen = false;
 let mediaModalCloseTimer = null;
 let heroNameTypingTimer = null;
+let parallaxFrame = null;
 const headerMenuMedia = window.matchMedia("(max-width: 1024px)");
 const languageMenuMedia = window.matchMedia("(max-width: 720px)");
 const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+const parallaxPointer = {
+  x: window.innerWidth / 2,
+  y: window.innerHeight / 2,
+};
 
 /**
  * Stops the hero name typing animation and restores the full text.
@@ -813,6 +819,59 @@ function animateHeroName(language) {
   };
 
   heroNameTypingTimer = window.setTimeout(typeNextCharacter, 180);
+}
+
+/**
+ * Draws the current parallax offset for the floating background dots.
+ *
+ * @returns {void}
+ */
+function renderParallaxDots() {
+  parallaxFrame = null;
+
+  if (reducedMotionMedia.matches || !selectors.parallaxDots.length) {
+    selectors.parallaxDots.forEach((dot) => {
+      dot.style.setProperty("--parallax-x", "0px");
+      dot.style.setProperty("--parallax-y", "0px");
+    });
+    return;
+  }
+
+  const offsetX = (parallaxPointer.x / window.innerWidth - 0.5) * 2;
+  const offsetY = (parallaxPointer.y / window.innerHeight - 0.5) * 2;
+
+  selectors.parallaxDots.forEach((dot) => {
+    const depth = Number(dot.dataset.depth || 0.2);
+    const translateX = offsetX * depth * 26;
+    const translateY = offsetY * depth * 20;
+
+    dot.style.setProperty("--parallax-x", `${translateX.toFixed(2)}px`);
+    dot.style.setProperty("--parallax-y", `${translateY.toFixed(2)}px`);
+  });
+}
+
+/**
+ * Schedules a single animation frame for parallax updates.
+ *
+ * @returns {void}
+ */
+function queueParallaxRender() {
+  if (parallaxFrame) {
+    return;
+  }
+
+  parallaxFrame = window.requestAnimationFrame(renderParallaxDots);
+}
+
+/**
+ * Resets the parallax pointer to the viewport center.
+ *
+ * @returns {void}
+ */
+function resetParallaxPointer() {
+  parallaxPointer.x = window.innerWidth / 2;
+  parallaxPointer.y = window.innerHeight / 2;
+  queueParallaxRender();
 }
 
 /**
@@ -1256,6 +1315,20 @@ function applyLanguage(language) {
  * @returns {void}
  */
 function bindEvents() {
+  window.addEventListener("mousemove", (event) => {
+    parallaxPointer.x = event.clientX;
+    parallaxPointer.y = event.clientY;
+    queueParallaxRender();
+  });
+
+  window.addEventListener("mouseleave", () => {
+    resetParallaxPointer();
+  });
+
+  window.addEventListener("resize", () => {
+    resetParallaxPointer();
+  });
+
   selectors.languageButtons.forEach((button) => {
     button.addEventListener("click", () => {
       applyLanguage(button.dataset.lang);
@@ -1343,6 +1416,7 @@ function init() {
   selectors.mediaModalTitle.textContent = getTranslation(currentLanguage, "controls.previewTitle");
   syncHeaderMenuState();
   syncLanguageMenuState();
+  resetParallaxPointer();
   bindEvents();
 }
 
