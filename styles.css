@@ -743,6 +743,35 @@ html[data-theme="light"] .photo-card__frame {
   margin-top: 28px;
 }
 
+.language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.language-item {
+  display: flex;
+  flex: 1 1 220px;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-strong);
+}
+
+.language-item__title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.language-item__level {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
 .skill-group {
   display: flex;
   flex-direction: column;

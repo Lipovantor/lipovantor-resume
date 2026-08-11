@@ -61,6 +61,8 @@ const content = {
     section: {
       aboutEyebrow: "Profile",
       aboutTitle: "About",
+      languagesEyebrow: "Communication",
+      languagesTitle: "Languages",
       skillsEyebrow: "Expertise",
       skillsTitle: "Skills",
       educationEyebrow: "Learning",
@@ -99,6 +101,20 @@ const content = {
         "Client focus",
       ],
     },
+    languages: [
+      {
+        name: "English",
+        level: "Elementary proficiency",
+      },
+      {
+        name: "Russian",
+        level: "Native language",
+      },
+      {
+        name: "Ukrainian",
+        level: "Second native language",
+      },
+    ],
     about: {
       copy:
         "I am a WordPress developer focused on custom themes, redesign work, and improving existing websites. I also have web design experience, which helps me create cleaner interfaces and make better visual decisions. I value readable code and stable delivery without unnecessary complexity.",
@@ -286,6 +302,8 @@ const content = {
     section: {
       aboutEyebrow: "Profil",
       aboutTitle: "A propos",
+      languagesEyebrow: "Communication",
+      languagesTitle: "Langues",
       skillsEyebrow: "Expertise",
       skillsTitle: "Competences",
       educationEyebrow: "Formation",
@@ -324,6 +342,20 @@ const content = {
         "Orientation client",
       ],
     },
+    languages: [
+      {
+        name: "Anglais",
+        level: "Niveau elementaire",
+      },
+      {
+        name: "Russe",
+        level: "Langue maternelle",
+      },
+      {
+        name: "Ukrainien",
+        level: "Deuxieme langue maternelle",
+      },
+    ],
     about: {
       copy:
         "Je suis developpeur WordPress, specialise dans les themes sur mesure, les redesigns et l'amelioration de sites existants. J'ai aussi de l'experience en web design, ce qui m'aide a creer des interfaces plus propres et a prendre de meilleures decisions visuelles. J'accorde de l'importance a un code lisible et a une livraison stable sans complexite inutile.",
@@ -511,6 +543,8 @@ const content = {
     section: {
       aboutEyebrow: "Профиль",
       aboutTitle: "Обо мне",
+      languagesEyebrow: "Коммуникация",
+      languagesTitle: "Языки",
       skillsEyebrow: "Экспертиза",
       skillsTitle: "Навыки",
       educationEyebrow: "Обучение",
@@ -549,6 +583,20 @@ const content = {
         "Ориентация на результат",
       ],
     },
+    languages: [
+      {
+        name: "Английский",
+        level: "Элементарное владение",
+      },
+      {
+        name: "Русский",
+        level: "Родной язык",
+      },
+      {
+        name: "Украинский",
+        level: "Второй родной язык",
+      },
+    ],
     about: {
       copy:
         "Я WordPress-разработчик с фокусом на кастомные темы, редизайн и улучшение существующих сайтов. Также у меня есть опыт в веб-дизайне, что помогает делать интерфейсы чище и принимать более точные визуальные решения. Для меня важны читаемый код и стабильная реализация без лишней сложности.",
@@ -689,6 +737,7 @@ const selectors = {
   softSkillsList: document.querySelector("#soft-skills-list"),
   educationList: document.querySelector("#education-list"),
   experienceList: document.querySelector("#experience-list"),
+  languagesList: document.querySelector("#languages-list"),
   heroName: document.querySelector('[data-i18n="hero.name"]'),
   parallaxDots: Array.from(document.querySelectorAll("[data-parallax-dot]")),
   siteHeader: document.querySelector(".site-header"),
@@ -990,6 +1039,32 @@ function renderEducation(language) {
 }
 
 /**
+ * Renders the language proficiency block for the active language.
+ *
+ * @param {string} language
+ * @returns {void}
+ */
+function renderLanguages(language) {
+  selectors.languagesList.replaceChildren();
+
+  content[language].languages.forEach((item) => {
+    const article = document.createElement("article");
+    const title = document.createElement("h3");
+    const level = document.createElement("p");
+
+    article.className = "language-item";
+    title.className = "language-item__title";
+    level.className = "language-item__level";
+
+    title.textContent = item.name;
+    level.textContent = item.level;
+
+    article.append(title, level);
+    selectors.languagesList.append(article);
+  });
+}
+
+/**
  * Renders hard and soft skills for the active language.
  *
  * @param {string} language
@@ -1098,6 +1173,7 @@ function applyTranslations(language) {
   });
 
   renderEducation(language);
+  renderLanguages(language);
   renderSkills(language);
   renderExperience(language);
   updateLanguageButtons(language);
