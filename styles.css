@@ -404,6 +404,35 @@ html[data-theme="light"] .brand__compact {
   min-width: 0;
 }
 
+.hero__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.resume-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.resume-download__icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.resume-download:hover,
+.resume-download:focus-visible {
+  transform: translateY(-1px);
+}
+
 .hero__visual {
   flex: 1 1 320px;
 }

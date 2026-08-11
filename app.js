@@ -35,6 +35,12 @@ const content = {
       toggleLabelDark: "Switch to light theme",
       toggleLabelLight: "Switch to dark theme",
     },
+    resume: {
+      downloadLabel: "PDF",
+      downloadAria: "Open CV PDF in a new tab",
+      filePath: "./cv-en.pdf",
+      fileName: "sergey-bayraktar-cv-en.pdf",
+    },
     hero: {
       roleShort: "WordPress Developer",
       eyebrow: "WordPress Developer",
@@ -253,6 +259,12 @@ const content = {
       toggleTextLight: "Theme clair",
       toggleLabelDark: "Passer au theme clair",
       toggleLabelLight: "Passer au theme sombre",
+    },
+    resume: {
+      downloadLabel: "PDF",
+      downloadAria: "Ouvrir le CV PDF dans un nouvel onglet",
+      filePath: "./cv-fr.pdf",
+      fileName: "sergey-bayraktar-cv-fr.pdf",
     },
     hero: {
       roleShort: "Developpeur WordPress",
@@ -473,6 +485,12 @@ const content = {
       toggleLabelDark: "Переключить на светлую тему",
       toggleLabelLight: "Переключить на темную тему",
     },
+    resume: {
+      downloadLabel: "PDF",
+      downloadAria: "Открыть CV в PDF в новой вкладке",
+      filePath: "./cv-ru.pdf",
+      fileName: "sergey-bayraktar-cv-ru.pdf",
+    },
     hero: {
       roleShort: "WordPress разработчик",
       eyebrow: "WordPress разработчик",
@@ -680,6 +698,7 @@ const selectors = {
   langSwitcher: document.querySelector(".lang-switcher"),
   currentLanguageLabel: document.querySelector("[data-current-language]"),
   themeButton: document.querySelector(".theme-toggle"),
+  resumeDownloadLink: document.querySelector("[data-resume-download]"),
   mediaModal: document.querySelector("#media-modal"),
   mediaModalImage: document.querySelector(".media-modal__image"),
   mediaModalTitle: document.querySelector(".media-modal__title"),
@@ -924,6 +943,7 @@ function applyTranslations(language) {
   renderSkills(language);
   renderExperience(language);
   updateLanguageButtons(language);
+  updateResumeDownloadLink(language);
   updateThemeToggleText(language, currentTheme);
 }
 
@@ -941,6 +961,19 @@ function updateLanguageButtons(language) {
   });
 
   selectors.currentLanguageLabel.textContent = language.toUpperCase();
+}
+
+/**
+ * Updates the CV PDF link for the active language.
+ *
+ * @param {string} language
+ * @returns {void}
+ */
+function updateResumeDownloadLink(language) {
+  selectors.resumeDownloadLink.href = content[language].resume.filePath;
+  selectors.resumeDownloadLink.target = "_blank";
+  selectors.resumeDownloadLink.rel = "noopener noreferrer";
+  selectors.resumeDownloadLink.removeAttribute("download");
 }
 
 /**
