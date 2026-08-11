@@ -67,6 +67,8 @@ const content = {
       languagesTitle: "Languages",
       skillsEyebrow: "Expertise",
       skillsTitle: "Skills",
+      aiEyebrow: "Tools",
+      aiTitle: "AI",
       educationEyebrow: "Learning",
       educationTitle: "Education",
       experienceEyebrow: "Career",
@@ -123,6 +125,10 @@ const content = {
         level: "In progress...",
       },
     ],
+    ai: {
+      copy: "I actively study and apply artificial intelligence capabilities in my work as well.",
+      tools: ["Cursor", "ChatGPT", "Gemini", "Grok", "Opus", "Claude Code"],
+    },
     about: {
       copy:
         "I am a WordPress developer focused on custom themes, redesign work, and improving existing websites. I also have web design experience, which helps me create cleaner interfaces and make better visual decisions. I value readable code and stable delivery without unnecessary complexity.",
@@ -319,6 +325,8 @@ const content = {
       languagesTitle: "Langues",
       skillsEyebrow: "Expertise",
       skillsTitle: "Competences",
+      aiEyebrow: "Outils",
+      aiTitle: "IA",
       educationEyebrow: "Formation",
       educationTitle: "Formation",
       experienceEyebrow: "Carriere",
@@ -375,6 +383,10 @@ const content = {
         level: "En cours...",
       },
     ],
+    ai: {
+      copy: "J'etudie activement et j'applique aussi dans mon travail les possibilites de l'intelligence artificielle.",
+      tools: ["Cursor", "ChatGPT", "Gemini", "Grok", "Opus", "Claude Code"],
+    },
     about: {
       copy:
         "Je suis developpeur WordPress, specialise dans les themes sur mesure, les redesigns et l'amelioration de sites existants. J'ai aussi de l'experience en web design, ce qui m'aide a creer des interfaces plus propres et a prendre de meilleures decisions visuelles. J'accorde de l'importance a un code lisible et a une livraison stable sans complexite inutile.",
@@ -571,6 +583,8 @@ const content = {
       languagesTitle: "Языки",
       skillsEyebrow: "Экспертиза",
       skillsTitle: "Навыки",
+      aiEyebrow: "Инструменты",
+      aiTitle: "ИИ",
       educationEyebrow: "Обучение",
       educationTitle: "Образование",
       experienceEyebrow: "Карьера",
@@ -627,6 +641,10 @@ const content = {
         level: "В процессе...",
       },
     ],
+    ai: {
+      copy: "Я активно изучаю и применяю в работе также возможности искусственного интеллекта.",
+      tools: ["Cursor", "ChatGPT", "Gemini", "Grok", "Opus", "Claude Code"],
+    },
     about: {
       copy:
         "Я WordPress-разработчик с фокусом на кастомные темы, редизайн и улучшение существующих сайтов. Также у меня есть опыт в веб-дизайне, что помогает делать интерфейсы чище и принимать более точные визуальные решения. Для меня важны читаемый код и стабильная реализация без лишней сложности.",
@@ -768,6 +786,7 @@ const content = {
 const selectors = {
   hardSkillsList: document.querySelector("#hard-skills-list"),
   softSkillsList: document.querySelector("#soft-skills-list"),
+  aiToolsList: document.querySelector("#ai-tools-list"),
   educationList: document.querySelector("#education-list"),
   experienceList: document.querySelector("#experience-list"),
   languagesList: document.querySelector("#languages-list"),
@@ -1126,6 +1145,24 @@ function renderSkills(language) {
 }
 
 /**
+ * Renders the AI tools list for the active language.
+ *
+ * @param {string} language
+ * @returns {void}
+ */
+function renderAiTools(language) {
+  selectors.aiToolsList.replaceChildren();
+
+  content[language].ai.tools.forEach((item) => {
+    const tag = document.createElement("span");
+
+    tag.className = "skill-tag";
+    tag.textContent = item;
+    selectors.aiToolsList.append(tag);
+  });
+}
+
+/**
  * Renders the experience section for the active language.
  *
  * @param {string} language
@@ -1210,6 +1247,7 @@ function applyTranslations(language) {
   renderEducation(language);
   renderLanguages(language);
   renderSkills(language);
+  renderAiTools(language);
   renderExperience(language);
   updateLanguageButtons(language);
   updateResumeDownloadLink(language);

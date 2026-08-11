@@ -789,6 +789,10 @@ html[data-theme="light"] .photo-card__frame {
   gap: 12px;
 }
 
+.ai-tools {
+  margin-top: 24px;
+}
+
 .skill-tag {
   display: inline-flex;
   align-items: center;
