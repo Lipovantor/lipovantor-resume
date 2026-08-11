@@ -689,6 +689,7 @@ const selectors = {
   softSkillsList: document.querySelector("#soft-skills-list"),
   educationList: document.querySelector("#education-list"),
   experienceList: document.querySelector("#experience-list"),
+  heroName: document.querySelector('[data-i18n="hero.name"]'),
   siteHeader: document.querySelector(".site-header"),
   siteNav: document.querySelector(".site-nav"),
   siteNavLinks: Array.from(document.querySelectorAll(".site-nav a")),
@@ -714,8 +715,105 @@ let currentTheme = getInitialTheme();
 let isHeaderMenuOpen = false;
 let isLanguageMenuOpen = false;
 let mediaModalCloseTimer = null;
+let heroNameTypingTimer = null;
 const headerMenuMedia = window.matchMedia("(max-width: 1024px)");
 const languageMenuMedia = window.matchMedia("(max-width: 720px)");
+const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+/**
+ * Stops the hero name typing animation and restores the full text.
+ *
+ * @returns {void}
+ */
+function stopHeroNameTyping() {
+  if (heroNameTypingTimer) {
+    window.clearTimeout(heroNameTypingTimer);
+    heroNameTypingTimer = null;
+  }
+
+  if (!selectors.heroName) {
+    return;
+  }
+
+  selectors.heroName.classList.remove("hero-name--typing");
+  selectors.heroName.textContent = getTranslation(currentLanguage, "hero.name");
+  selectors.heroName.removeAttribute("aria-label");
+}
+
+/**
+ * Plays the hero name typing animation on initial page load.
+ *
+ * @param {string} language
+ * @returns {void}
+ */
+function animateHeroName(language) {
+  if (!selectors.heroName) {
+    return;
+  }
+
+  const fullText = getTranslation(language, "hero.name");
+
+  if (!fullText || reducedMotionMedia.matches) {
+    stopHeroNameTyping();
+    return;
+  }
+
+  stopHeroNameTyping();
+  selectors.heroName.setAttribute("aria-label", fullText);
+  selectors.heroName.replaceChildren();
+
+  const nameParts = fullText.trim().split(/\s+/);
+  const firstLineText = nameParts[0] ?? "";
+  const secondLineText = nameParts.slice(1).join(" ");
+  const lines = [firstLineText, secondLineText].filter(Boolean);
+  const lineNodes = lines.map((lineText) => {
+    const line = document.createElement("span");
+
+    line.className = "hero-name__line";
+    line.dataset.fullText = lineText;
+    line.textContent = "";
+    selectors.heroName.append(line);
+
+    return line;
+  });
+
+  let lineIndex = 0;
+  let currentIndex = 0;
+
+  const typeNextCharacter = () => {
+    const activeLine = lineNodes[lineIndex];
+
+    if (!activeLine) {
+      selectors.heroName.textContent = fullText;
+      selectors.heroName.removeAttribute("aria-label");
+      heroNameTypingTimer = null;
+      return;
+    }
+
+    activeLine.classList.add("hero-name__line--typing");
+    currentIndex += 1;
+    activeLine.textContent = activeLine.dataset.fullText.slice(0, currentIndex);
+
+    if (currentIndex < activeLine.dataset.fullText.length) {
+      heroNameTypingTimer = window.setTimeout(typeNextCharacter, currentIndex === 1 ? 95 : 55);
+      return;
+    }
+
+    activeLine.classList.remove("hero-name__line--typing");
+    lineIndex += 1;
+    currentIndex = 0;
+
+    if (lineIndex < lineNodes.length) {
+      heroNameTypingTimer = window.setTimeout(typeNextCharacter, 110);
+      return;
+    }
+
+    selectors.heroName.removeAttribute("aria-label");
+    heroNameTypingTimer = null;
+  };
+
+  heroNameTypingTimer = window.setTimeout(typeNextCharacter, 180);
+}
 
 /**
  * Returns a nested translation value by path.
@@ -914,6 +1012,7 @@ function renderExperience(language) {
  * @returns {void}
  */
 function applyTranslations(language) {
+  stopHeroNameTyping();
   document.documentElement.lang = language;
   document.title = content[language].pageTitle;
 
@@ -1148,6 +1247,7 @@ function applyLanguage(language) {
   currentLanguage = language;
   localStorage.setItem(STORAGE_KEYS.language, language);
   applyTranslations(language);
+  animateHeroName(language);
 }
 
 /**
