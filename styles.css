@@ -1007,6 +1007,10 @@ html[data-theme="light"] .media-modal__dialog {
 }
 
 @media (max-width: 1024px) {
+  .parallax-dots {
+    display: none;
+  }
+
   .hero__grid {
     flex-direction: column;
   }

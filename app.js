@@ -821,6 +821,7 @@ let mediaModalCloseTimer = null;
 let heroNameTypingTimer = null;
 let parallaxFrame = null;
 const headerMenuMedia = window.matchMedia("(max-width: 1024px)");
+const parallaxMedia = window.matchMedia("(max-width: 1024px)");
 const languageMenuMedia = window.matchMedia("(max-width: 720px)");
 const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
 const parallaxPointer = {
@@ -931,7 +932,7 @@ function animateHeroName(language) {
 function renderParallaxDots() {
   parallaxFrame = null;
 
-  if (reducedMotionMedia.matches || !selectors.parallaxDots.length) {
+  if (reducedMotionMedia.matches || parallaxMedia.matches || !selectors.parallaxDots.length) {
     selectors.parallaxDots.forEach((dot) => {
       dot.style.setProperty("--parallax-x", "0px");
       dot.style.setProperty("--parallax-y", "0px");
