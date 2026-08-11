@@ -8,7 +8,9 @@ const SUPPORTED_LANGUAGES = ["en", "fr", "ru"];
 
 const content = {
   en: {
-    pageTitle: "Sergey Bayraktar | WordPress Developer",
+    pageTitle: "Sergey Bayraktar | Middle WordPress Developer",
+    metaDescription:
+      "Middle WordPress developer focused on custom themes, redesigns, landing pages, WooCommerce improvements, and clean front-end delivery. Available for remote collaboration.",
     brand: {
       full: "LIPOVANTOR",
       short: "L",
@@ -84,6 +86,8 @@ const content = {
         "JavaScript (jQuery)",
         "PHP",
         "WordPress (Woo)",
+        "ACF",
+        "SEO",
         "MySQL",
         "npm",
         "Gulp",
@@ -123,6 +127,9 @@ const content = {
       emailLabel: "Email",
       telegramLabel: "Telegram",
       phoneLabel: "Phone",
+      linkedinLabel: "LinkedIn",
+      githubLabel: "GitHub",
+      xLabel: "X",
     },
     education: [
       {
@@ -249,7 +256,9 @@ const content = {
     ],
   },
   fr: {
-    pageTitle: "Sergey Bayraktar | Developpeur WordPress",
+    pageTitle: "Sergey Bayraktar | Developpeur WordPress Middle",
+    metaDescription:
+      "Developpeur WordPress middle specialise dans les themes sur mesure, les redesigns, les landing pages, les ameliorations WooCommerce et un front-end propre. Disponible pour une collaboration a distance.",
     brand: {
       full: "LIPOVANTOR",
       short: "L",
@@ -325,6 +334,8 @@ const content = {
         "JavaScript (jQuery)",
         "PHP",
         "WordPress (Woo)",
+        "ACF",
+        "SEO",
         "MySQL",
         "npm",
         "Gulp",
@@ -364,6 +375,9 @@ const content = {
       emailLabel: "Email",
       telegramLabel: "Telegram",
       phoneLabel: "Telephone",
+      linkedinLabel: "LinkedIn",
+      githubLabel: "GitHub",
+      xLabel: "X",
     },
     education: [
       {
@@ -490,7 +504,9 @@ const content = {
     ],
   },
   ru: {
-    pageTitle: "Сергей Байрактар | WordPress разработчик",
+    pageTitle: "Сергей Байрактар | Middle WordPress Developer",
+    metaDescription:
+      "Middle WordPress Developer с фокусом на кастомные темы, редизайн, лендинги, доработку WooCommerce и аккуратный фронтенд. Открыт к удаленному сотрудничеству.",
     brand: {
       full: "LIPOVANTOR",
       short: "L",
@@ -566,6 +582,8 @@ const content = {
         "JavaScript (jQuery)",
         "PHP",
         "WordPress (Woo)",
+        "ACF",
+        "SEO",
         "MySQL",
         "npm",
         "Gulp",
@@ -605,6 +623,9 @@ const content = {
       emailLabel: "Email",
       telegramLabel: "Telegram",
       phoneLabel: "Телефон",
+      linkedinLabel: "LinkedIn",
+      githubLabel: "GitHub",
+      xLabel: "X",
     },
     education: [
       {
@@ -740,6 +761,7 @@ const selectors = {
   languagesList: document.querySelector("#languages-list"),
   heroName: document.querySelector('[data-i18n="hero.name"]'),
   parallaxDots: Array.from(document.querySelectorAll("[data-parallax-dot]")),
+  metaDescription: document.querySelector("[data-meta-description]"),
   siteHeader: document.querySelector(".site-header"),
   siteNav: document.querySelector(".site-nav"),
   siteNavLinks: Array.from(document.querySelectorAll(".site-nav a")),
@@ -1149,6 +1171,7 @@ function applyTranslations(language) {
   stopHeroNameTyping();
   document.documentElement.lang = language;
   document.title = content[language].pageTitle;
+  selectors.metaDescription?.setAttribute("content", content[language].metaDescription);
 
   selectors.translatableNodes.forEach((node) => {
     const key = node.dataset.i18n;
