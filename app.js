@@ -118,6 +118,10 @@ const content = {
         name: "Ukrainian",
         level: "Second native language",
       },
+      {
+        name: "French",
+        level: "In progress...",
+      },
     ],
     about: {
       copy:
@@ -366,6 +370,10 @@ const content = {
         name: "Ukrainien",
         level: "Deuxieme langue maternelle",
       },
+      {
+        name: "Francais",
+        level: "En cours...",
+      },
     ],
     about: {
       copy:
@@ -613,6 +621,10 @@ const content = {
       {
         name: "Украинский",
         level: "Второй родной язык",
+      },
+      {
+        name: "Французский",
+        level: "В процессе...",
       },
     ],
     about: {
